@@ -2,9 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: devops-portfoilo-deployment
-  
 spec:
-  replicas: 1
+  replicas: 10
   selector:
     matchLabels:
       app: my-profile
@@ -14,8 +13,15 @@ spec:
         app: my-profile
     spec:
       containers:
-      - name: my-profile
-        image: rohitgitte01/devops-portfolio:v1
-        ports:
-        - containerPort: 3000
+        - name: my-profile
+          image: rohitgitte01/devops-portfolio:v1
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "120Mi"
+            limits:
+              cpu: "200m"
+              memory: "130Mi"
 

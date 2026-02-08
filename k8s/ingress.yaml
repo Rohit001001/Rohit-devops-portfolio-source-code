@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: porfile-devops-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: rohit-devops-profile.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: devops-portfolio-service
+            port:
+              number: 80
+
