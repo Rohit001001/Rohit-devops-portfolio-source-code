@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-portfoilo-deployment
+  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-profile
+  template:
+    metadata:
+      labels:
+        app: my-profile
+    spec:
+      containers:
+      - name: my-profile
+        image: rohitgitte01/devops-portfolio:v1
+        ports:
+        - containerPort: 3000
+

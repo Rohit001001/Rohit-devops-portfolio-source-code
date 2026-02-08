@@ -1,9 +1,12 @@
 import type { NextConfig } from "next";
-import path from "node:path";
-
-const LOADER = path.resolve(__dirname, 'src/visual-edits/component-tagger-loader.js');
 
 const nextConfig: NextConfig = {
+  // --- REQUIRED FOR DOCKER ---
+  // This tells Next.js to create a small, standalone build
+  output: "standalone",
+
+  // --- KEEPING THESE ---
+  // These allow images from anywhere, which is convenient
   images: {
     remotePatterns: [
       {
@@ -16,21 +19,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  outputFileTracingRoot: path.resolve(__dirname, '../../'),
+
+  // --- ERROR HANDLING ---
+  // Good for beginners: Prevents the build from failing due to small code style issues
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
-  turbopack: {
-    rules: {
-      "*.{jsx,tsx}": {
-        loaders: [LOADER]
-      }
-    }
-  }
 };
 
 export default nextConfig;
-// Orchids restart: 1770474815518
