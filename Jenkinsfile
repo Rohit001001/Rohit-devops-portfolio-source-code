@@ -3,8 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'rohitgitte01/devops-portfolio:latest'
-        KUBECONFIG = '/home/ubuntu/.kube/config'
-        MINIKUBE_HOME = '/home/ubuntu/.minikube'
+        KUBECONFIG  = '/var/lib/jenkins/.kube/config'
     }
 
     stages {
@@ -13,6 +12,8 @@ pipeline {
             steps {
                 sh 'echo "Jenkins is running as user: $(whoami)"'
                 sh 'ls -l ${KUBECONFIG}'
+                sh 'kubectl get nodes'
+                sh 'docker ps'
             }
         }
 
@@ -38,9 +39,10 @@ pipeline {
             }
         }
 
-        stage('Deploy to Minikube') {
+        stage('Deploy to K8s') {
             steps {
                 sh "kubectl --kubeconfig=${KUBECONFIG} apply -f deploy.yml"
+                sh "kubectl --kubeconfig=${KUBECONFIG} apply -f portfolio-ingress.yaml"
                 sh "kubectl --kubeconfig=${KUBECONFIG} rollout restart deployment/devops-portfoilo-deployment"
             }
         }
